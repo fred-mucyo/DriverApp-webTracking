@@ -108,7 +108,8 @@ export default function App() {
               longitude: loc.coords.longitude,
             },
           ]);
-          if (error) console.error("Supabase insert error:", error);
+          if (error){ console.error("Supabase insert error:", error)}
+          else console.log("Inserted successfully:", data);
         }
       );
       setWatcher(w);
