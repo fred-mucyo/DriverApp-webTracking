@@ -12,12 +12,18 @@ import { Picker } from "@react-native-picker/picker";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import * as Battery from "expo-battery";
-import { createClient } from "@supabase/supabase-js";
+
 
 // --- Supabase setup ---
-const supabaseUrl = "https://ocvmwvyvcvcdyblocrdr.supabase.co";
-const supabaseKey ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdm13dnl2Y3ZjZHlibG9jcmRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYwMjEwNTIsImV4cCI6MjA3MTU5NzA1Mn0.xaQum7Ejd0G1qdEKKY1QRuJXNS5RKUrGbg3a8TxOck4";
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
+import { createClient } from "@supabase/supabase-js";
+
+console.log("Supabase URL:", SUPABASE_URL);
+console.log("Supabase KEY:", SUPABASE_ANON_KEY ? "Loaded" : "Missing");
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
 
 // --- Background location task name ---
 const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
@@ -41,7 +47,7 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
         },
       ]);
 
-      if (error) console.error("Supabase insert error:", error);
+      if (error) console.error("Supabase insert error:", error.message,error.details);
     }
   }
 });
